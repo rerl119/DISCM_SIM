@@ -1,10 +1,11 @@
 #ifndef PROGRAM_H
 #define PROGRAM_H
-#include "ShaderClass.h"  
+
+#include "ShaderClass.h"
 #include <string>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-// Ensure this file is correctly defined and available
-// CLASS THAT RUNS SHADERS
+
 class Program {
 private:
     GLuint prog;          // Program ID
@@ -15,19 +16,28 @@ private:
 
 public:
     // Constructor that takes paths to the vertex and fragment shader files
-    Program(std::string v_path, std::string f_path);
+    Program(const std::string& v_path, const std::string& f_path);
     
     // Constructor that takes ShaderClass objects for vertex and fragment shaders
-    Program(ShaderClass vert, ShaderClass frag);
+    Program(const ShaderClass& vert, const ShaderClass& frag);
+    
+    // Destructor to clean up resources
+    ~Program();
     
     // Method to use the shader program
-    void use();
+    void use() const;
     
     // Getter for the fragment shader ID
-    unsigned int getFrag();
+    unsigned int getFrag() const;
     
     // Getter for the vertex shader ID
-    unsigned int getVert();
+    unsigned int getVert() const;
+    
+    // Method to get the program ID
+    GLuint getID() const;
+
+    // Method to check and print shader program linking errors
+    bool checkLinkingErrors() const;
 };
 
 #endif // PROGRAM_H
